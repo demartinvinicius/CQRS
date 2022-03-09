@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudCQRS.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20220309133553_renaming")]
-    partial class renaming
+    [Migration("20220309163845_Migração Inicial")]
+    partial class MigraçãoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

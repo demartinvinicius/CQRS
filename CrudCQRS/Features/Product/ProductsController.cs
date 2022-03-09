@@ -5,6 +5,7 @@ using CrudCQRS.Features.Product.Create;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nudes.Retornator.Core;
+using CrudCQRS.Features.Product.Update;
 
 
 namespace CrudCQRS.Features.Product
@@ -32,7 +33,7 @@ namespace CrudCQRS.Features.Product
             => mediator.Send(query, cancellation);
 
         [HttpPut("{id}")]
-        public Task<int> Update([FromRoute] int id, [FromBody] UpdateProductCommand request, CancellationToken cancellation)
+        public Task<ResultOf<int>> Update([FromRoute] int id, [FromBody] UpdateProductRequest request, CancellationToken cancellation)
         {
             request.Id = id;
             return mediator.Send(request, cancellation);
