@@ -1,15 +1,13 @@
 ﻿using CrudCQRS.CQRS.Commands;
 using CrudCQRS.CQRS.Queries;
-using CrudCQRS.Models;
+using CrudCQRS.DTO;
+using CrudCQRS.Features.Product.Create;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Nudes.Retornator.Core;
 
 
-namespace CrudCQRS.Controllers
+namespace CrudCQRS.Features.Product
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,22 +20,15 @@ namespace CrudCQRS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProductCommand request, CancellationToken cancellation)
-        {
-            return Ok(await mediator.Send(request, cancellation));
-        }
-
-        public IMediator GetMediator()
-        {
-            return mediator;
-        }
+        public Task<ResultOf<int>> Create([FromBody] CreateProductRequest request, CancellationToken cancellation)
+            => mediator.Send(request, cancellation);
 
         [HttpGet]
-        public Task<List<Product>> GetAll(IMediator mediator, CancellationToken cancellation) 
+        public Task<List<Models.Product>> GetAll(IMediator mediator, CancellationToken cancellation)
             => mediator.Send(new GetAllProductQuery(), cancellation);
 
         [HttpGet("{Id}")]
-        public Task<Product> GetById([FromRoute] GetProductByIdQuery query, CancellationToken cancellation)
+        public Task<ResultOf<ProductDTO>> GetById([FromRoute] GetProductByIdQuery query, CancellationToken cancellation)
             => mediator.Send(query, cancellation);
 
         [HttpPut("{id}")]
