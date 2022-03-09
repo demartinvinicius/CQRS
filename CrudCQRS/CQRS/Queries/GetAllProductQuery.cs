@@ -9,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace CrudCQRS.CQRS.Queries
 {
-    public class GetAllProductQuery : IRequest<IEnumerable<Product>>
+    public class GetAllProductQuery : IRequest<List<Product>>
     {
-        public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, IEnumerable<Product>>
+        public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, List<Product>>
         {
             private ProductContext context;
             public GetAllProductQueryHandler(ProductContext context)
             {
                 this.context = context;
             }
-            public async Task<IEnumerable<Product>> Handle(GetAllProductQuery query,CancellationToken cancellationToken)
+            public Task<List<Product>> Handle(GetAllProductQuery query,CancellationToken cancellationToken)
             {
-                var productList = await context.Product.ToListAsync();
-                return productList;
+                return context.Products.ToListAsync(cancellationToken);
             }
         }
     }

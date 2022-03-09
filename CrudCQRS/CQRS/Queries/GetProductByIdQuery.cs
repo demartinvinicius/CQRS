@@ -19,10 +19,9 @@ namespace CrudCQRS.CQRS.Queries
             {
                 this.context = context; 
             }
-            public async Task<Product> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
+            public Task<Product> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
             {
-                var product = await context.Product.Where(a => a.Id == query.Id).FirstOrDefaultAsync();
-                return product;
+                return context.Products.FirstOrDefaultAsync(a => a.Id == query.Id, cancellationToken);
             }
         }
     }

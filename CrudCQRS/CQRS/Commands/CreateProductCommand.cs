@@ -28,7 +28,7 @@ namespace CrudCQRS.CQRS.Commands
                 product.Name = command.Name;
                 product.Price = command.Price;
 
-                context.Product.Add(product);
+                context.Products.Add(product);
                 await context.SaveChangesAsync();
                 return product.Id;
             }

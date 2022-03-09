@@ -1,5 +1,6 @@
 ﻿using CrudCQRS.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrudCQRS.CQRS.Commands
 {
@@ -12,26 +13,23 @@ namespace CrudCQRS.CQRS.Commands
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, int>
         {
             private ProductContext context;
-            
+
             public UpdateProductCommandHandler(ProductContext context)
             {
                 this.context = context;
             }
 
-            public async Task<int> Handle(UpdateProductCommand command,CancellationToken cancellationToken)
+            public async Task<int> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
             {
-                var product = context.Product.Where(a => a.Id == command.Id).FirstOrDefault();
-                if (product == null)
-                {
-                    return default;
-                }
-                else
+                var product = await context.Products.Where(a => a.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
+                if (product is not null)
                 {
                     product.Name = command.Name;
                     product.Price = command.Price;
-                    await context.SaveChangesAsync();
-                    return product.Id;
+                    await context.SaveChangesAsync(cancellationToken);
                 }
+
+                return product?.Id ?? default;
             }
         }
     }
