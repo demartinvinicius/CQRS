@@ -3,19 +3,20 @@ using CrudCQRS.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Nudes.Retornator.Core;
+using Nudes.Paginator.Core;
 
 
 namespace CrudCQRS.Features.Product.Queries.All;
 
 
-public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResultOf<List<ProductDTO>>>
+public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResultOf<PageResult<ProductDTO>>>
 {
     private ProductContext context;
     public GetAllProductQueryHandler(ProductContext context)
     {
         this.context = context;
     }
-    public async Task<ResultOf<List<ProductDTO>>> Handle(GetAllProductQueryRequest query, CancellationToken cancellationToken)
+    public async Task<ResultOf<PageResult<ProductDTO>>> Handle(GetAllProductQueryRequest query, CancellationToken cancellationToken)
     {
         var products = context.Products.AsQueryable();
 
@@ -43,8 +44,8 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
         }).ToListAsync(cancellationToken);
 
 
-        return items;
-
+        var result = new PageResult<ProductDTO>(query, total, items);
+        return result;
     }
 
 

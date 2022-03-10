@@ -8,6 +8,7 @@ using CrudCQRS.Features.Product.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nudes.Retornator.Core;
+using Nudes.Paginator.Core;
 
 
 
@@ -27,7 +28,7 @@ namespace CrudCQRS.Features.Product
             => mediator.Send(request, cancellation);
 
         [HttpGet]
-        public Task<ResultOf<List<ProductDTO>>> GetAll([FromQuery] GetAllProductQueryRequest query,CancellationToken cancellation)
+        public Task<ResultOf<PageResult<ProductDTO>>> GetAll([FromQuery] GetAllProductQueryRequest query,CancellationToken cancellation)
             => mediator.Send(query, cancellation);
 
         [HttpGet("{Id}")]
