@@ -6,30 +6,33 @@ using Nudes.Retornator.Core;
 
 namespace CrudCQRS.Features.Product.Update;
 
-public partial class UpdateProductCommand
+
+public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, Result>
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, ResultOf<int>>
+    private ProductContext context;
+
+    public UpdateProductHandler(ProductContext context)
     {
-        private ProductContext context;
+        this.context = context;
+    }
 
-        public UpdateProductHandler(ProductContext context)
+    public async Task<Result> Handle(UpdateProductRequest command, CancellationToken cancellationToken)
+    {
+        var product = await context.Products.Where(a => a.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
+        if (product == null)
+            return new NotFoundError();
+
+        if (product.Price >= command.Price)
         {
-            this.context = context;
+            return new BadRequestError().AddFieldErrors("Price", "You must increase the price");
         }
 
-        public async Task<ResultOf<int>> Handle(UpdateProductRequest command, CancellationToken cancellationToken)
-        {
-            var product = await context.Products.Where(a => a.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
-            if (product == null)
-                return new NotFoundError();
+        product.Name = command.Name;
+        product.Price = command.Price;
+        await context.SaveChangesAsync(cancellationToken);
 
-            
-            product.Name = command.Name;
-            product.Price = command.Price;
-            await context.SaveChangesAsync(cancellationToken);
-            
 
-            return product.Id;
-        }
+        return Result.Success;
     }
 }
+

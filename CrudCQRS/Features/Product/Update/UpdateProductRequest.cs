@@ -3,7 +3,7 @@ using Nudes.Retornator.Core;
 
 namespace CrudCQRS.Features.Product.Update;
 
-public partial class UpdateProductRequest : IRequest<ResultOf<int>>
+public class UpdateProductRequest : IRequest<Result>
 {
     public int Id { get; set; }
     public string Name { get; set; }
