@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Nudes.Retornator.Core;
 
+
 namespace CrudCQRS.Features.Product.Queries.All;
 
 
@@ -16,16 +17,35 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
     }
     public async Task<ResultOf<List<ProductDTO>>> Handle(GetAllProductQueryRequest query, CancellationToken cancellationToken)
     {
-        var products = await context.Products
-            .Where(d =>  d.Price >= (query.MinimumPrice ?? 0)  
-                   && (query.MaximumPrice == null ? true : d.Price <= query.MaximumPrice))
-            .Select(d => new ProductDTO
+        var products = context.Products.AsQueryable();
+
+        if (query.MinimumPrice.HasValue)
+        {
+            products = products.Where(d => d.Price >= query.MinimumPrice);
+        }
+
+        if (query.MaximumPrice.HasValue)
+        {
+            products = products.Where(d => d.Price <= query.MaximumPrice);
+        }
+
+        List<ProductDTO> items;
+
+
+
+        var total = await products.CountAsync(cancellationToken);
+
+        items = await products.PaginateBy(query, d => d.Name).Select(d => new ProductDTO
         {
             Id = d.Id,
             Name = d.Name,
-            Price = d.Price,
-            }).ToListAsync(cancellationToken: cancellationToken);
+            Price = d.Price
+        }).ToListAsync(cancellationToken);
 
-        return products;
+
+        return items;
+
     }
+
+
 }
