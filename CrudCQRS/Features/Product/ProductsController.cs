@@ -1,7 +1,9 @@
-﻿using CrudCQRS.CQRS.Commands;
+﻿
 using CrudCQRS.CQRS.Queries;
 using CrudCQRS.DTO;
 using CrudCQRS.Features.Product.Create;
+using CrudCQRS.Features.Product.Delete;
+using CrudCQRS.Features.Product.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nudes.Retornator.Core;
@@ -24,7 +26,7 @@ namespace CrudCQRS.Features.Product
             => mediator.Send(request, cancellation);
 
         [HttpGet]
-        public Task<List<Models.Product>> GetAll(IMediator mediator, CancellationToken cancellation)
+        public Task<ResultOf<List<ProductDTO>>> GetAll(CancellationToken cancellation)
             => mediator.Send(new GetAllProductQuery(), cancellation);
 
         [HttpGet("{Id}")]
@@ -32,15 +34,16 @@ namespace CrudCQRS.Features.Product
             => mediator.Send(query, cancellation);
 
         [HttpPut("{id}")]
-        public Task<int> Update([FromRoute] int id, [FromBody] UpdateProductCommand request, CancellationToken cancellation)
+        public Task<ResultOf<int>> Update([FromRoute] int id, [FromBody] UpdateProductRequest request, CancellationToken cancellation)
         {
             request.Id = id;
             return mediator.Send(request, cancellation);
         }
 
         [HttpDelete("{id}")]
-        public Task<int> Delete([FromRoute] DeleteProductByIdCommand request, CancellationToken cancellation)
+        public Task<ResultOf<int>> Delete([FromRoute] int id,[FromBody] DeleteProductByIdRequest request, CancellationToken cancellation)
         {
+            request.Id=id;
             return mediator.Send(request, cancellation);
         }
 
