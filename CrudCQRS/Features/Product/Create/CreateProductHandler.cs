@@ -1,6 +1,5 @@
 ﻿using CrudCQRS.Models;
 using MediatR;
-using Nudes.Retornator.AspnetCore.Errors;
 using Nudes.Retornator.Core;
 
 namespace CrudCQRS.Features.Product.Create;

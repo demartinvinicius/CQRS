@@ -1,7 +1,6 @@
 using MediatR;
 using System.Reflection;
 using CrudCQRS.Models;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Nudes.Retornator.AspnetCore;
 using FluentValidation;

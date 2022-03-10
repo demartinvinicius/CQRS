@@ -1,6 +1,5 @@
-﻿using CrudCQRS.Models;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+
 
 namespace CrudCQRS.Features.Product.Update;
 
