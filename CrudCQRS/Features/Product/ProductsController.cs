@@ -7,6 +7,7 @@ using CrudCQRS.Features.Product.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nudes.Retornator.Core;
+using CrudCQRS.Features.Product.Update;
 
 
 namespace CrudCQRS.Features.Product
