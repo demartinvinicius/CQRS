@@ -1,4 +1,5 @@
 ﻿using CrudCQRS.DTO;
+using CrudCQRS.Features.Product.Bogus;
 using CrudCQRS.Features.Product.Create;
 using CrudCQRS.Features.Product.Delete;
 using CrudCQRS.Features.Product.Queries.All;
@@ -40,6 +41,12 @@ namespace CrudCQRS.Features.Product
 
         [HttpDelete("{Id}")]
         public Task<Result> Delete([FromRoute] DeleteProductByIdRequest request, CancellationToken cancellation)
+            => mediator.Send(request, cancellation);
+
+
+        [Route("/bogus")]
+        [HttpGet]
+        public Task<ResultOf<List<ProductDTO>>> Generate([FromQuery] CreateBogusRequest request, CancellationToken cancellation)
             => mediator.Send(request, cancellation);
 
     }
