@@ -10,7 +10,7 @@ namespace CrudCQRS.Features.Product.Queries.ById;
 
 public class GetProductByIdHandler : IRequestHandler<GetProductByIdRequest, ResultOf<ProductDTO>>
 {
-    private ProductContext context;
+    private readonly ProductContext context;
     public GetProductByIdHandler(ProductContext context)
     {
         this.context = context;

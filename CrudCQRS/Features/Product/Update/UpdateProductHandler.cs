@@ -9,7 +9,7 @@ namespace CrudCQRS.Features.Product.Update;
 
 public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, Result>
 {
-    private ProductContext context;
+    private readonly ProductContext context;
 
     public UpdateProductHandler(ProductContext context)
     {
@@ -30,8 +30,6 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, Result
         product.Name = command.Name;
         product.Price = command.Price;
         await context.SaveChangesAsync(cancellationToken);
-
-
         return Result.Success;
     }
 }

@@ -9,7 +9,7 @@ namespace CrudCQRS.Features.Product.Delete;
 
 public class DeleteProductByIdHandler : IRequestHandler<DeleteProductByIdRequest, Result>
 {
-    private ProductContext context;
+    private readonly ProductContext context;
     public DeleteProductByIdHandler(ProductContext context)
     {
         this.context = context;

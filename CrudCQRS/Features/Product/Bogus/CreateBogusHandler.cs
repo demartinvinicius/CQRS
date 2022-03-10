@@ -8,7 +8,7 @@ namespace CrudCQRS.Features.Product.Bogus;
 
 public class CreateBogusHandler : IRequestHandler<CreateBogusRequest, ResultOf<List<ProductDTO>>>
 {
-    private ProductContext context;
+    private readonly ProductContext context;
 
     public CreateBogusHandler(ProductContext context) =>
         this.context = context;
@@ -28,10 +28,9 @@ public class CreateBogusHandler : IRequestHandler<CreateBogusRequest, ResultOf<L
                 .RuleFor(o => o.Name, f => f.Commerce.ProductName())
                 .Generate(request.NumberItensToGenerate ?? 100);
 
-        foreach (var product in bogusproducts)
-        {
-            await context.Products.AddAsync(product, cancellationToken);
-        }
+
+        bogusproducts.ForEach(async d => await context.Products.AddAsync(d, cancellationToken));
+
         await context.SaveChangesAsync(cancellationToken);
 
         return bogusproducts.Select(a => new ProductDTO
