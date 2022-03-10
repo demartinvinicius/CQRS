@@ -16,12 +16,15 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
     }
     public async Task<ResultOf<List<ProductDTO>>> Handle(GetAllProductQueryRequest query, CancellationToken cancellationToken)
     {
-        var products = await context.Products.Select(d => new ProductDTO
+        var products = await context.Products
+            .Where(d =>  d.Price >= (query.MinimumPrice ?? 0)  
+                   && (query.MaximumPrice == null ? true : d.Price <= query.MaximumPrice))
+            .Select(d => new ProductDTO
         {
             Id = d.Id,
             Name = d.Name,
             Price = d.Price,
-        }).ToListAsync();
+            }).ToListAsync(cancellationToken: cancellationToken);
 
         return products;
     }

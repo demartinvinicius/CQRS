@@ -26,8 +26,8 @@ namespace CrudCQRS.Features.Product
             => mediator.Send(request, cancellation);
 
         [HttpGet]
-        public Task<ResultOf<List<ProductDTO>>> GetAll(CancellationToken cancellation)
-            => mediator.Send(new GetAllProductQueryRequest(), cancellation);
+        public Task<ResultOf<List<ProductDTO>>> GetAll([FromQuery] GetAllProductQueryRequest query,CancellationToken cancellation)
+            => mediator.Send(query, cancellation);
 
         [HttpGet("{Id}")]
         public Task<ResultOf<ProductDTO>> GetById([FromRoute] GetProductByIdRequest query, CancellationToken cancellation)
