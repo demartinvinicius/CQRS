@@ -1,4 +1,5 @@
 ﻿using CrudCQRS.Models;
+using Mapster;
 using MediatR;
 using Nudes.Retornator.Core;
 
@@ -14,11 +15,13 @@ class CreateProductHandler : IRequestHandler<CreateProductRequest, ResultOf<int>
     }
     public async Task<ResultOf<int>> Handle(CreateProductRequest command, CancellationToken cancellationToken)
     {
-        var product = new Models.Product
+        /*var product = new Models.Product
         {
             Name = command.Name,
             Price = command.Price
-        };
+        };*/
+
+        var product = command.product.Adapt<Models.Product>();
 
         context.Products.Add(product);
         await context.SaveChangesAsync(cancellationToken);

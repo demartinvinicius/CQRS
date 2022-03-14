@@ -3,6 +3,7 @@ using CrudCQRS.DTO;
 using CrudCQRS.Models;
 using MediatR;
 using Nudes.Retornator.Core;
+using Mapster;
 
 namespace CrudCQRS.Features.Product.Bogus;
 
@@ -33,11 +34,7 @@ public class CreateBogusHandler : IRequestHandler<CreateBogusRequest, ResultOf<L
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return bogusproducts.Select(a => new ProductDTO
-        {
-            Id = a.Id,
-            Name = a.Name,
-            Price = a.Price,
-        }).ToList();
+        return bogusproducts.AsQueryable<Models.Product>().ProjectToType<ProductDTO>().ToList();
+        
     }
 }
