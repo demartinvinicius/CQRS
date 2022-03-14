@@ -1,8 +1,8 @@
 ﻿using CrudCQRS.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+
 using Nudes.Retornator.AspnetCore.Errors;
-using Nudes.Retornator.Core;
+
 
 namespace CrudCQRS.Features.Product.Delete;
 

@@ -21,7 +21,7 @@ class CreateProductHandler : IRequestHandler<CreateProductRequest, ResultOf<int>
             Price = command.Price
         };*/
 
-        var product = command.product.Adapt<Models.Product>();
+        var product = command.Product.Adapt<Models.Product>();
 
         context.Products.Add(product);
         await context.SaveChangesAsync(cancellationToken);

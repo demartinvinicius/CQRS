@@ -19,8 +19,9 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdRequest, Resu
     public async Task<ResultOf<ProductDTO>> Handle(GetProductByIdRequest query, CancellationToken cancellationToken)
     {
 
-        var product = await context.Products.ProjectToType<ProductDTO>().FirstOrDefaultAsync(a => a.Id == query.Id,cancellationToken);
-        
+
+        var product = await context.Products.ProjectToType<ProductDTO>().FirstOrDefaultAsync(a => a.Id == query.Id, cancellationToken);
+
         if (product == null)
             return new NotFoundError();
 

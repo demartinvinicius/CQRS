@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace CrudCQRS.Features.Product.Delete;
+﻿namespace CrudCQRS.Features.Product.Delete;
 
 class DeleteProductByIdValidator : AbstractValidator<DeleteProductByIdRequest>
 {

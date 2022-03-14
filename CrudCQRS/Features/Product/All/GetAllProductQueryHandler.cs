@@ -1,9 +1,5 @@
-﻿using CrudCQRS.DTO;
-using CrudCQRS.Models;
-using MediatR;
+﻿using CrudCQRS.Models;
 using Microsoft.EntityFrameworkCore;
-using Nudes.Retornator.Core;
-using Nudes.Paginator.Core;
 using Mapster;
 
 
@@ -12,7 +8,7 @@ namespace CrudCQRS.Features.Product.Queries.All;
 
 public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResultOf<PageResult<ProductDTO>>>
 {
-    private ProductContext context;
+    private readonly ProductContext context;
     public GetAllProductQueryHandler(ProductContext context)
     {
         this.context = context;

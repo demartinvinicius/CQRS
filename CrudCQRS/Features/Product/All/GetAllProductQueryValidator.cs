@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Nudes.Paginator.FluentValidation;
+﻿
 
 namespace CrudCQRS.Features.Product.Queries.All;
 

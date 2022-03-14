@@ -1,9 +1,4 @@
-﻿using CrudCQRS.DTO;
-using MediatR;
-using Nudes.Retornator.Core;
-using Nudes.Paginator.Core;
-
-namespace CrudCQRS.Features.Product.Queries.All;
+﻿namespace CrudCQRS.Features.Product.Queries.All;
 
 public class GetAllProductQueryRequest : PageRequest, IRequest<ResultOf<PageResult<ProductDTO>>>
 {

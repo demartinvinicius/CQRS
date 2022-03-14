@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace CrudCQRS.Models
+﻿namespace CrudCQRS.Models
 {
     public class ProductContext : DbContext
     {

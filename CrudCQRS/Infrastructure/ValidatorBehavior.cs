@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-using Nudes.Retornator.AspnetCore.Errors;
-using Nudes.Retornator.Core;
+﻿using Nudes.Retornator.AspnetCore.Errors;
 
 namespace CrudCQRS.Infrastructure;
 

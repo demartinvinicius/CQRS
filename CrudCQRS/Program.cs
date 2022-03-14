@@ -1,4 +1,3 @@
-using MediatR;
 using System.Reflection;
 using CrudCQRS.Models;
 using Microsoft.EntityFrameworkCore;

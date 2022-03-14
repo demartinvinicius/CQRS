@@ -1,16 +1,10 @@
-﻿using CrudCQRS.DTO;
-using CrudCQRS.Features.Product.Bogus;
+﻿using CrudCQRS.Features.Product.Bogus;
 using CrudCQRS.Features.Product.Create;
 using CrudCQRS.Features.Product.Delete;
 using CrudCQRS.Features.Product.Queries.All;
 using CrudCQRS.Features.Product.Queries.ById;
 using CrudCQRS.Features.Product.Update;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Nudes.Retornator.Core;
-using Nudes.Paginator.Core;
-
-
 
 namespace CrudCQRS.Features.Product
 {
@@ -18,7 +12,7 @@ namespace CrudCQRS.Features.Product
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IMediator mediator;
+        private readonly IMediator mediator;
         public ProductsController(IMediator mediator)
             => this.mediator = mediator;
         
