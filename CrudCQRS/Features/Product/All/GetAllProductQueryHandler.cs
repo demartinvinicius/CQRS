@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Nudes.Retornator.Core;
 using Nudes.Paginator.Core;
+using Mapster;
 
 
 namespace CrudCQRS.Features.Product.Queries.All;
@@ -30,22 +31,12 @@ public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryReque
             products = products.Where(d => d.Price <= query.MaximumPrice);
         }
 
-        List<ProductDTO> items;
-
-
-
         var total = await products.CountAsync(cancellationToken);
 
-        items = await products.PaginateBy(query, d => d.Name).Select(d => new ProductDTO
-        {
-            Id = d.Id,
-            Name = d.Name,
-            Price = d.Price
-        }).ToListAsync(cancellationToken);
+        var items = await products.PaginateBy(query, d => d.Name).ProjectToType<ProductDTO>().ToListAsync(cancellationToken);
 
-
-        var result = new PageResult<ProductDTO>(query, total, items);
-        return result;
+        return new PageResult<ProductDTO>(query, total, items);
+        
     }
 
 
